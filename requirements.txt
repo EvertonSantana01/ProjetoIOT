@@ -1,0 +1,5 @@
+django
+opencv-python
+ultralytics
+easyocr
+numpy

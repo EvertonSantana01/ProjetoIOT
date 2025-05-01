@@ -1,0 +1,161 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e9eef3;
+}
+
+header {
+  background-color: #1a237e;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+.left-panel,
+.right-panel {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-panel h2 {
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+#video-container {
+  position: relative;
+  width: 640px;
+  height: 480px;
+  border: 4px solid #fff;
+}
+
+#video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right-panel {
+  flex: 1;
+  background-color: #fff;
+}
+
+.right-panel h2 {
+  text-align: center;
+}
+
+.placa-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.placa-conteudo {
+  z-index: 2;
+  font-size: 38px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 6px;
+  text-shadow: 1px 1px #fff;
+}
+
+
+.placa-box {
+  width: 320px;
+  height: 80px;
+  margin: 0 auto;
+  font-size: 56px;
+  /* DOBRO do anterior */
+  font-weight: bold;
+  letter-spacing: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  border: 2px solid #000;
+  color: #000;
+  text-shadow: 1px 1px 0px #fff;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.placa-etiqueta-superior {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  /* centraliza horizontalmente */
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  background-color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  padding: 2px 0;
+  z-index: 3;
+  width: auto;
+  max-width: 100%;
+}
+
+.placa-conteudo {
+  z-index: 2;
+  margin-bottom: 6px;
+}
+
+.dados {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.dados p {
+  margin: 6px 0;
+}
+
+.restricao {
+  color: red;
+  font-weight: bold;
+}
+
+.sem-restricao {
+  color: green;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+th,
+td {
+  border: 1px solid #aaa;
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #eee;
+}

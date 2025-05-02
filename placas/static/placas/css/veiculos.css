@@ -1,0 +1,112 @@
+body {
+    background: linear-gradient(135deg, #0a1d36, #142b4d);
+    color: #e0e6ed;
+}
+
+/* NAV padrão do dashboard */
+.navbar {
+    background-color: #071429 !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.navbar .nav-link {
+    color: #9db3cc !important;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+    color: #ffffff !important;
+}
+
+.navbar-text {
+    color: #ffffff;
+}
+
+.fw-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: yellowgreen !important;
+}
+
+.fw-bold text-success{
+    color: white ;
+}
+
+/* MENU LATERAL */
+#menu-opcoes {
+    transition: all 0.3s ease;
+}
+
+#menu-opcoes button {
+    font-size: 0.9rem;
+}
+
+#placa-input {
+    background-color: #e9f0f8;
+    border: 1px solid #839cb9;
+    color: #000;
+}
+
+#placa-input::placeholder {
+    color: #6b6b6b;
+    font-size: 0.85rem;
+}
+
+/* RESULTADO */
+#resultado-consulta {
+    background-color: #1a2a3c;
+    color: white;
+    border: 1px solid #0e213c;
+}
+
+#mensagem-inicial {
+    font-size: 1rem;
+    padding: 10px;
+    color: #b5b5b5;
+}
+
+/* TABELA */
+.table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+    border-color: #839cb9 !important;
+    padding: 8px 12px;
+    vertical-align: middle;
+}
+
+.table thead th {
+    background-color: #193456;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f8fbff;
+    color: #000;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #e9f0f8;
+    color: #000;
+}
+
+.table td {
+    font-weight: 500;
+}
+
+.alert {
+    font-size: 0.95rem;
+}
+
+/* SHADOW PADRÃO */
+.shadow-sm {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}

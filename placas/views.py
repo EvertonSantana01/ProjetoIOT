@@ -7,7 +7,7 @@ from .detector.detector import detectar_placa
 from .api_brasil import consultar_placa_apibrasil
 from django.utils.timezone import now
 import base64, json, cv2, numpy as np
-
+from django.views.decorators.http import require_GET
 from .models import Consulta
 from .detector.detector import detectar_placa
 from .api_brasil import consultar_placa_apibrasil
@@ -15,8 +15,9 @@ from .api_brasil import consultar_placa_apibrasil
 def camera_view(request):
     return render(request, 'placas/dashboard.html')
 
-from django.http import JsonResponse
-from .models import Consulta
+def veiculos_view(request):
+    return render(request, 'placas/veiculos.html')
+
 
 def ultima_consulta_json(request):
     ultima = Consulta.objects.order_by('-data_consulta').first()
@@ -130,3 +131,66 @@ def detectar_placa_view(request):
             return JsonResponse({'status': 'erro', 'mensagem': str(e)})
 
     return JsonResponse({'status': 'erro', 'mensagem': 'Requisição inválida'}, status=400)
+
+@csrf_exempt
+def consultar_placa_manual_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            placa = data.get('placa')
+            if not placa:
+                return JsonResponse({'status': 'erro', 'mensagem': 'Placa não informada'})
+
+            dados = consultar_placa_apibrasil(placa)
+
+            if dados:
+                return JsonResponse({'status': 'sucesso', 'dados': dados})
+            else:
+                return JsonResponse({'status': 'erro', 'mensagem': 'API não retornou dados'})
+
+        except Exception as e:
+            return JsonResponse({'status': 'erro', 'mensagem': str(e)})
+    return JsonResponse({'status': 'erro', 'mensagem': 'Método inválido'}, status=400)
+
+
+
+@require_GET
+def consultar_cadastrados_view(request):
+    placa = request.GET.get('placa', '').strip().upper()
+    if not placa:
+        return JsonResponse({'status': 'erro', 'mensagem': 'Placa não fornecida'})
+
+    try:
+        consulta = Consulta.objects.filter(placa__iexact=placa).order_by('-data_consulta').first()
+        if not consulta:
+            return JsonResponse({'status': 'erro', 'mensagem': 'Placa não encontrada'})
+
+        dados = {
+            "placa": consulta.placa,
+            "modelo": consulta.modelo,
+            "marca": consulta.marca,
+            "versao": consulta.versao,
+            "cor": consulta.cor,
+            "ano": consulta.ano,
+            "anoModelo": consulta.ano_modelo,
+            "municipio": consulta.municipio,
+            "uf": consulta.uf,
+            "chassi": consulta.chassi,
+            "combustivel": consulta.combustivel,
+            "potencia": consulta.potencia,
+            "cilindradas": consulta.cilindradas,
+            "situacao_veiculo": consulta.situacao_veiculo,
+            "nacionalidade": consulta.nacionalidade,
+            "quantidade_passageiro": consulta.quantidade_passageiro,
+            "peso_bruto_total": consulta.peso_bruto_total,
+            "data": consulta.data_api,
+            "ultima_atualizacao": consulta.ultima_atualizacao,
+            "restricao1": consulta.restricao1,
+            "restricao2": consulta.restricao2,
+            "restricao3": consulta.restricao3,
+            "restricao4": consulta.restricao4,
+            "logo": consulta.logo_url
+        }
+        return JsonResponse({'status': 'sucesso', 'dados': dados})
+    except Exception as e:
+        return JsonResponse({'status': 'erro', 'mensagem': str(e)})

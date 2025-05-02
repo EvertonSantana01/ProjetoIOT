@@ -18,7 +18,13 @@ def detectar_placa(frame):
 
         cropped = frame[y1:y2, x1:x2]
         pre = preprocess(cropped)
+
+        cv2.imwrite("ultima_placa.jpg", cropped)
+        cv2.imwrite("ultima_placa_pre.jpg", pre)
+
         placa = aplicar_ocr(pre)
+        print("🔍 Resultado OCR:", placa)
+
         if placa:
             return placa
     return None

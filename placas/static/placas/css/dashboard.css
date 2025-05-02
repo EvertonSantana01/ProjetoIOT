@@ -1,0 +1,165 @@
+body {
+  background: linear-gradient(135deg, #0a1d36, #142b4d);
+  color: #e0e6ed;
+}
+
+.navbar {
+  background-color: #071429 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.fw-bold {
+  color: #ffffff !important;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: yellowgreen !important;
+}
+
+.navbar .nav-link {
+  color: #9db3cc !important;
+}
+
+.navbar .nav-link.active,
+.navbar .nav-link:hover {
+  color: #ffffff !important;
+}
+
+.navbar-text {
+  color: #ffffff;
+}
+.mb-lg-0{
+  font-size: 1.2rem;
+}
+
+.nav-item{
+  font-size: 1.2rem;
+}
+.nav-item:hover {
+  font-size: 1.2rem;
+  background-color: #0a2344;
+  border-radius: 10px;
+  
+}
+
+
+
+
+.text-primary {
+  color: #57a3ff !important;
+}
+
+#camera-frame-container {
+  background-color: #0a1324;
+  border: 4px solid #102641;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  max-width: 660px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+
+.placa-box {
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  width: 75%;
+  max-width: 800px;
+  height: 220px;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+}
+
+.placa-conteudo {
+  font-size: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: black;
+  /* ← alterado de white para black */
+  background: transparent;
+  z-index: 1;
+  line-height: 1;
+  padding-top: 60px;
+}
+
+.placa-etiqueta-superior {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+}
+
+.table,
+.table th,
+.table td {
+  color: #e0e6ed;
+  background-color: #13263f;
+  border-color: #839cb9;
+}
+
+.table thead th {
+  background-color: #193456;
+}
+
+/* Estilo zebra para tabelas */
+.zebra-rows tbody tr:nth-child(odd) {
+  background-color: #324b6d;
+  /* azul escuro primário */
+}
+
+.zebra-rows tbody tr:nth-child(even) {
+  background-color: #0f2237;
+  /* azul escuro secundário */
+}
+
+.table-bordered th,
+.table-bordered td {
+  border-color: #7ba3d1 !important;
+}
+
+
+
+.restricao-info {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.shadow {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+#historico-table-container {
+  max-height: 500px;
+  /* altura para ~20 linhas */
+  overflow-y: auto;
+  border: 1px solid #304b6a;
+  border-radius: 5px;
+}
+
+#historico-table thead th {
+  position: sticky;
+  top: 0;
+  background-color: #193456;
+  z-index: 1;
+}
+
+.dados-table {
+  font-size: 18px !important;
+  color: aqua;
+}
+
+.dados-table th,
+.dados-table td {
+  font-size: 18px;
+  padding: 10px 12px;
+}

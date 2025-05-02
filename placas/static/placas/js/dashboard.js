@@ -72,7 +72,14 @@ function atualizarDashboard() {
       box.style.backgroundImage = `url('/static/placas/imagens/${imgPath}')`;
       conteudo.textContent = data.placa;
       box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">${etiquetaTexto}</div>`);
-
+      // Atualiza os dados do veículo
+      const campoPlaca = document.getElementById('placa');
+      if (campoPlaca && data.placa) {
+        campoPlaca.textContent = data.placa.toUpperCase();
+        console.log("✔️ Placa inserida com sucesso:", data.placa);
+      } else {
+        console.warn("⚠️ Placa não atribuída. Valor:", data.placa);
+      }
       document.getElementById('modelo').textContent = data.modelo || '';
       document.getElementById('marca').textContent = data.marca || '';
       document.getElementById('cor').textContent = data.cor || '';

@@ -1,5 +1,3 @@
-// dashboard.js compatível com HTML original + campos adicionais
-
 function getCookie(name) {
   let cookieValue = null;
   if (document.cookie && document.cookie !== '') {
@@ -37,30 +35,32 @@ function sendImageToServer() {
     },
     body: JSON.stringify({ imagem: imageBase64 })
   })
-  .then(response => response.json())
-  .then(() => atualizarDashboard())
-  .catch(err => console.error("Erro ao enviar imagem:", err));
+    .then(response => response.json())
+    .then(() => {
+      atualizarDashboard();
+    })
+    .catch(err => console.error("Erro ao enviar imagem:", err));
 }
 
 function atualizarDashboard() {
   fetch('/ultima-consulta-json')
     .then(res => res.json())
     .then(data => {
+      console.log("📦 Dados recebidos:", data);
       const box = document.getElementById('placa-render');
       const conteudo = box.querySelector('.placa-conteudo');
-      const etiqueta = box.querySelector('.placa-etiqueta-superior');
+      const etiqueta = document.querySelector('.placa-etiqueta-superior');
+      if (etiqueta) etiqueta.remove();
 
       if (!data || !data.placa) {
         box.style.backgroundImage = "url('/static/placas/imagens/img__mercosul.png')";
         conteudo.textContent = "---";
-        etiqueta.textContent = "BRASIL MODELO MERCOSUL";
-
-        ['modelo','marca','cor','ano','municipio','situacao','combustivel','potencia','chassi','versao'].forEach(id => {
+        box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">BRASIL MODELO MERCOSUL</div>`);
+        ['modelo', 'marca', 'cor', 'ano', 'municipio', 'situacao', 'combustivel', 'potencia', 'chassi', 'versao'].forEach(id => {
           const el = document.getElementById(id);
           if (el) el.textContent = '';
         });
-
-        document.getElementById('restricao-info').textContent = '';
+        document.getElementById('restricao1').innerHTML = '';
         document.querySelector('#historico-table tbody').innerHTML = '';
         return;
       }
@@ -71,7 +71,7 @@ function atualizarDashboard() {
 
       box.style.backgroundImage = `url('/static/placas/imagens/${imgPath}')`;
       conteudo.textContent = data.placa;
-      etiqueta.textContent = etiquetaTexto;
+      box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">${etiquetaTexto}</div>`);
 
       document.getElementById('modelo').textContent = data.modelo || '';
       document.getElementById('marca').textContent = data.marca || '';
@@ -84,8 +84,15 @@ function atualizarDashboard() {
       if (document.getElementById('chassi')) document.getElementById('chassi').textContent = data.chassi || '';
       if (document.getElementById('versao')) document.getElementById('versao').textContent = data.versao || '';
 
-      const restricao = document.getElementById('restricao-info');
-      restricao.textContent = data.restricao ? '⚠️ Restrição Encontrada' : '';
+      // 🔴🟢 Exibe restrição diretamente no campo Restrição 1
+      const restricao1 = document.getElementById('restricao1');
+      const temRestricao = data.restricao === true;
+      if (temRestricao) {
+        const motivo = data.restricao_motivo || 'Procurar DETRAN';
+        restricao1.innerHTML = `<span style="color:#f44336; font-size:2rem; font-weight:bold;">🚫 Com restrição: ${motivo}</span>`;
+      } else {
+        restricao1.innerHTML = `<span style="color:#00cc66; font-size:1.3rem; font-weight:bold;">✅ Sem restrição</span>`;
+      }
 
       const tbody = document.querySelector('#historico-table tbody');
       tbody.innerHTML = (data.historico || []).map(item => `
@@ -113,5 +120,4 @@ async function startVideo() {
 
 window.onload = () => {
   startVideo();
-  setInterval(atualizarDashboard, 4000);
 };

@@ -30,15 +30,15 @@ body {
 }
 
 .mb-lg-0 {
-  font-size: 1.2rem;
+  font-size: 1.0em;
 }
 
 .nav-item {
-  font-size: 1.2rem;
+  font-size: 1.0em;
 }
 
 .nav-item:hover {
-  font-size: 1.2rem;
+  
   background-color: #0a2344;
   border-radius: 10px;
 }
@@ -184,4 +184,12 @@ body {
   padding: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+#historico-table-container {
+  max-height: 500px;
+  /* ajuste conforme necessário */
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }

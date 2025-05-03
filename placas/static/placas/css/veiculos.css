@@ -22,6 +22,15 @@ body {
     color: #ffffff;
 }
 
+.nav-item {
+    font-size: 1.0em;
+}
+
+.nav-item:hover {
+    background-color: #0a2344;
+    border-radius: 10px;
+}
+
 .fw-bold {
     font-family: "Poppins", sans-serif;
     font-weight: 700;
@@ -29,9 +38,7 @@ body {
     color: yellowgreen !important;
 }
 
-.fw-bold text-success{
-    color: white ;
-}
+
 
 /* MENU LATERAL */
 #menu-opcoes {

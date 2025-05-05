@@ -16,10 +16,10 @@
           <a class="nav-link active" href="#">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Veículos</a>
+          <a class="nav-link" href="{% url 'pagina_veiculos' %}">Consultas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Pesquisar</a>
+          <a class="nav-link" href="{% url 'veiculos_gerenciar' %}">Gerenciamento</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Login</a>
@@ -60,6 +60,7 @@
             </tr>
           </thead>
           <tbody>
+            <tr><th><i class="bi bi-upc"></i> Placa:</th><td id="placa"></td></tr>
             <tr><th><i class="bi bi-car-front-fill"></i> Modelo:</th><td id="modelo"></td></tr>
             <tr><th><i class="bi bi-buildings"></i> Marca:</th><td id="marca"></td></tr>
             <tr><th><i class="bi bi-palette"></i> Cor:</th><td id="cor"></td></tr>
@@ -70,10 +71,7 @@
             <tr><th><i class="bi bi-fuel-pump"></i> Combustível:</th><td id="combustivel"></td></tr>
             <tr><th><i class="bi bi-speedometer2"></i> Potência:</th><td id="potencia"></td></tr>
             <tr><th><i class="bi bi-cpu"></i> Chassi:</th><td id="chassi"></td></tr>
-            <tr><th><i class="bi bi-exclamation-triangle"></i> Restrição 1:</th><td id="restricao1"></td></tr>
-            <tr><th><i class="bi bi-exclamation-triangle"></i> Restrição 2:</th><td id="restricao2"></td></tr>
-            <tr><th><i class="bi bi-exclamation-triangle"></i> Restrição 3:</th><td id="restricao3"></td></tr>
-            <tr><th><i class="bi bi-exclamation-triangle"></i> Restrição 4:</th><td id="restricao4"></td></tr>
+            <tr><th><i class="bi bi-exclamation-triangle"></i> Restrição:</th><td id="restricao1"></td></tr>
           </tbody>
         </table>
 
@@ -84,7 +82,7 @@
     <!-- Histórico -->
     <div class="row mt-4">
       <div class="col-12">
-        <h5 class="text-center mb-2">Histórico da Sessão</h5>
+        <div id="historico-titulo">Histórico da Sessão</div>
         <div id="historico-table-container">
           <table class="table table-bordered" id="historico-table">
             <thead>

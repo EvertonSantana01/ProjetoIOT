@@ -77,20 +77,31 @@ function consultaCadastrados() {
 // Função para renderizar os dados (usada por ambas)
 function renderizarResultado(info) {
   const restricoes = [
-    info.restricao1, info.restricao2,
-    info.restricao3, info.restricao4
+    info.restricao1,
+    info.restricao2,
+    info.restricao3,
+    info.restricao4
   ].filter(r => r && r !== 'SEM RESTRICAO');
+
+  const placaNova = info.placa_nova && info.placa_nova.length >= 7 ? info.placa_nova : info.placa_modelo_novo;
+  const placaAntiga = info.placa_modelo_antigo || info.placa;
 
   const tabela = `
     <h2 class="text-primary">Resultado da Consulta</h2>
     <table class="table table-bordered table-striped bg-white text-dark">
       <tbody>
-        <tr><th>Placa</th><td>${info.placa}</td></tr>
-        <tr><th>Modelo</th><td>${info.modelo}</td></tr>
-        <tr><th>Marca</th><td>${info.marca}</td></tr>
+        <tr>
+          <th>Placas</th>
+          <td>
+            ${placaNova ? `<strong>Nova (Mercosul):</strong> ${placaNova}<br>` : ''}
+            ${placaAntiga ? `<strong>Antiga:</strong> ${placaAntiga}` : ''}
+          </td>
+        </tr>
+        <tr><th>Modelo</th><td>${info.modelo || ''}</td></tr>
+        <tr><th>Marca</th><td>${info.marca || ''}</td></tr>
         <tr><th>Versão</th><td>${info.versao || ''}</td></tr>
         <tr><th>Cor</th><td>${info.cor || ''}</td></tr>
-        <tr><th>Ano</th><td>${info.ano}</td></tr>
+        <tr><th>Ano</th><td>${info.ano || ''}</td></tr>
         <tr><th>Ano Modelo</th><td>${info.anoModelo || ''}</td></tr>
         <tr><th>Município</th><td>${info.municipio || ''}</td></tr>
         <tr><th>UF</th><td>${info.uf || ''}</td></tr>
@@ -111,5 +122,6 @@ function renderizarResultado(info) {
     </table>
   `;
 
-  document.getElementById('resultado-consulta').innerHTML = tabela;
+  document.getElementById("resultado-consulta").innerHTML = tabela;
 }
+

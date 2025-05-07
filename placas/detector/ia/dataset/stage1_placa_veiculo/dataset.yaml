@@ -1,0 +1,6 @@
+train: ../images
+val: ../images
+test: ../images
+
+nc: 1
+names: ['placa_veiculo']

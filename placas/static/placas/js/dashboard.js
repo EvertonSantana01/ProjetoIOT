@@ -39,28 +39,32 @@ function exibirBarraDeProgresso() {
   });
 }
 
+function exibirPlacaDetectadaNaTela(placaDetectada) {
+  const box = document.getElementById('placa-render');
+  const conteudo = box.querySelector('.placa-conteudo');
+  const etiqueta = box.querySelector('.placa-etiqueta-superior');
+  if (etiqueta) etiqueta.remove();
+
+  const tipo = /^[A-Z]{3}[0-9]{4}$/.test(placaDetectada) ? "velha" : "mercosul";
+  const imgPath = tipo === "mercosul" ? "img__mercosul.png" : "img__velha.png";
+  const etiquetaTexto = tipo === "mercosul" ? "BRASIL MODELO MERCOSUL" : "BRASIL MODELO ANTIGO";
+
+  box.style.backgroundImage = `url('/static/placas/imagens/${imgPath}')`;
+  conteudo.textContent = placaDetectada;
+  box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">${etiquetaTexto}</div>`);
+}
+
 function atualizarDashboard() {
   fetch('/ultima-consulta-json')
     .then(res => res.json())
     .then(data => {
-      if (!data || !data.placa || data.placa === ultimaPlacaProcessada) return;
+      if (!data || !data.placa) return;  // Se a API não trouxe nova placa, não apaga a atual
+
+      // Se for a mesma da última exibida, evita reprocessar
+      if (data.placa === ultimaPlacaProcessada) return;
 
       ultimaPlacaProcessada = data.placa;
-
-      const box = document.getElementById('placa-render');
-      const conteudo = box.querySelector('.placa-conteudo');
-      const etiqueta = box.querySelector('.placa-etiqueta-superior');
-      if (etiqueta) etiqueta.remove();
-
-      const tipo = /^[A-Z]{3}[0-9]{4}$/.test(data.placa) ? "velha" : "mercosul";
-      const imgPath = tipo === "mercosul" ? "img__mercosul.png" : "img__velha.png";
-      const etiquetaTexto = tipo === "mercosul" ? "BRASIL MODELO MERCOSUL" : "BRASIL MODELO ANTIGO";
-
-      box.style.backgroundImage = `url('/static/placas/imagens/${imgPath}')`;
-      conteudo.textContent = data.placa;
-      box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">${etiquetaTexto}</div>`);
-
-      // Exibe barra de progresso antes de preencher os dados
+      exibirPlacaDetectadaNaTela(data.placa);
       exibirBarraDeProgresso();
 
       setTimeout(() => {
@@ -98,7 +102,24 @@ function atualizarDashboard() {
     });
 }
 
+function atualizarSemaforo(cor) {
+  const verde = document.getElementById("sinal-verde");
+  const amarelo = document.getElementById("sinal-amarelo");
+  const vermelho = document.getElementById("sinal-vermelho");
+
+  verde.classList.add("d-none");
+  amarelo.classList.add("d-none");
+  vermelho.classList.add("d-none");
+
+  if (cor === "verde") verde.classList.remove("d-none");
+  else if (cor === "vermelho") vermelho.classList.remove("d-none");
+  else amarelo.classList.remove("d-none");  // padrão
+}
+
+
 function sendImageToServer() {
+  atualizarSemaforo("amarelo"); // inicia como lendo
+
   const imageBase64 = captureImage();
 
   fetch('/detectar-placa/', {
@@ -113,25 +134,22 @@ function sendImageToServer() {
     .then(data => {
       const placaDetectada = data.placa;
 
-      // Validação local imediata
-      if (placaDetectada && /^[A-Z]{3}[0-9]{4}$/.test(placaDetectada) || /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/.test(placaDetectada)) {
-        const box = document.getElementById('placa-render');
-        const conteudo = box.querySelector('.placa-conteudo');
-        const etiqueta = document.querySelector('.placa-etiqueta-superior');
-        if (etiqueta) etiqueta.remove();
-
-        const tipo = /^[A-Z]{3}[0-9]{4}$/.test(placaDetectada) ? 'velha' : 'mercosul';
-        const imgPath = tipo === "mercosul" ? "img__mercosul.png" : "img__velha.png";
-        const etiquetaTexto = tipo === "mercosul" ? "BRASIL MODELO MERCOSUL" : "BRASIL MODELO ANTIGO";
-
-        box.style.backgroundImage = `url('/static/placas/imagens/${imgPath}')`;
-        conteudo.textContent = placaDetectada;
-        box.insertAdjacentHTML("afterbegin", `<div class="placa-etiqueta-superior">${etiquetaTexto}</div>`);
+      if (
+        placaDetectada &&
+        (/^[A-Z]{3}[0-9]{4}$/.test(placaDetectada) || /^[A-Z]{3}[0-9][A-Z][0-9]{2}$/.test(placaDetectada))
+      ) {
+        exibirPlacaDetectadaNaTela(placaDetectada);
+        atualizarSemaforo("verde"); // detectou
+      } else {
+        atualizarSemaforo("vermelho"); // não detectou
       }
 
-      atualizarDashboard(); // depois a API será consultada normalmente
+      atualizarDashboard();
     })
-    .catch(err => console.error("Erro ao enviar imagem:", err));
+    .catch(err => {
+      console.error("Erro ao enviar imagem:", err);
+      atualizarSemaforo("vermelho");
+    });
 }
 
 async function startVideo() {

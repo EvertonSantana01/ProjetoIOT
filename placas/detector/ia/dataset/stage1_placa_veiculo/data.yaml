@@ -1,0 +1,5 @@
+train: D:/GitHub/ProjetoIOT/placas/detector/ia/dataset/stage1_placa_veiculo/images
+val: D:/GitHub/ProjetoIOT/placas/detector/ia/dataset/stage1_placa_veiculo/images
+
+nc: 1
+names: ['placa']

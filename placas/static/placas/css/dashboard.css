@@ -217,3 +217,35 @@ body {
     background-position: 100% 0%;
   }
 }
+
+/* Estilo para semáforo */
+#semaforo-status {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.semaforo {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  border: 1px solid white;
+}
+
+.amarelo {
+  background-color: yellow;
+}
+
+.verde {
+  background-color: limegreen;
+}
+
+.vermelho {
+  background-color: red;
+}
+
+.d-none {
+  display: none !important;
+}
